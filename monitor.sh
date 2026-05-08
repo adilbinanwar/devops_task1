@@ -1,20 +1,47 @@
-# !/bit/bash
-#####################
-# author:adil
-# date: 08-05-2026
-# verssion: v1
-#####################
-# This script monitors cpu usage, memory usade, disk usage of ec2 instance
-#####################
-# THis code displays all running services
-echo "Services are: "
+#!/bin/bash
+
+#############################################
+# Author  : Adil
+# Purpose : System Monitoring Script
+# Version : v1
+#############################################
+
+echo "=================================================="
+echo "            SYSTEM MONITORING REPORT"
+echo "=================================================="
+echo "Generated On : $(date)"
+echo ""
+
+############################
+# RUNNING SERVICES
+############################
+echo "================ RUNNING SERVICES ================"
 systemctl list-units --type=service --state=running
-# this code shows cpu usage
-echo "CPU usage: "
-top -bn1 | grep "Cpu(s)"
-# this code shows memory usage
-echo "Memory usage: "
+echo ""
+
+############################
+# CPU USAGE
+############################
+echo "=================== CPU USAGE ===================="
+cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
+
+printf "CPU Usage : %.2f%%\n" "$cpu_usage"
+echo ""
+
+############################
+# MEMORY USAGE
+############################
+echo "================= MEMORY USAGE ==================="
 free -h
-# this code shows disk usage
-echo "Disk usage: "
+echo ""
+
+############################
+# DISK USAGE
+############################
+echo "================== DISK USAGE ===================="
 df -h
+echo ""
+
+echo "=================================================="
+echo "         END OF SYSTEM MONITORING REPORT"
+echo "=================================================="
